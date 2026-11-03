@@ -1,0 +1,167 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/kpkchaitanya/mts-software-factory/contracts/assessment/mcq-question-bank.schema.json",
+  "title": "MTS Assessment MCQ Question Bank / Reviewer Record",
+  "description": "One passage or assessment section. The deterministic Python checker additionally enforces distributions, taxonomy coverage and key ordering. Independent semantic review is required, not automatically performed by the schema.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "passage_id",
+    "questions",
+    "answer_key"
+  ],
+  "properties": {
+    "passage_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "questions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "author_id",
+          "correct_choice_id",
+          "choices",
+          "review"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "author_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "correct_choice_id": {
+            "enum": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          "choices": {
+            "type": "array",
+            "minItems": 4,
+            "maxItems": 4,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "text"
+              ],
+              "properties": {
+                "id": {
+                  "enum": [
+                    "A",
+                    "B",
+                    "C",
+                    "D"
+                  ]
+                },
+                "text": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "trap_type": {
+                  "enum": [
+                    "too-broad",
+                    "too-narrow",
+                    "scope-shift",
+                    "too-generic",
+                    "too-specific",
+                    "plausible-unsupported",
+                    "partially-correct",
+                    "over-modified",
+                    "under-modified",
+                    "cause-effect-reversal",
+                    "tone-shift",
+                    "nearby-text"
+                  ]
+                },
+                "misconception": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "elimination_evidence": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          },
+          "review": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "reviewer_id",
+              "status",
+              "unique_answer_checked",
+              "passage_blind_checked",
+              "distractor_quality_checked",
+              "correct_answer_evidence"
+            ],
+            "properties": {
+              "reviewer_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "status": {
+                "enum": [
+                  "draft",
+                  "needs-revision",
+                  "approved",
+                  "rejected"
+                ]
+              },
+              "unique_answer_checked": {
+                "type": "boolean"
+              },
+              "passage_blind_checked": {
+                "type": "boolean"
+              },
+              "distractor_quality_checked": {
+                "type": "boolean"
+              },
+              "correct_answer_evidence": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      }
+    },
+    "answer_key": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "question_id",
+          "correct_choice_id"
+        ],
+        "properties": {
+          "question_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "correct_choice_id": {
+            "enum": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

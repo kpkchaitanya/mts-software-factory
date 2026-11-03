@@ -1,0 +1,28 @@
+name: Assessment MCQ Quality
+
+on:
+  push:
+    paths:
+      - 'src/mts_factory/assessment/**'
+      - 'src/mts_factory/__init__.py'
+      - 'tests/test_mcq_quality.py'
+      - '.github/workflows/assessment-quality.yml'
+  pull_request:
+    paths:
+      - 'src/mts_factory/assessment/**'
+      - 'src/mts_factory/__init__.py'
+      - 'tests/test_mcq_quality.py'
+      - '.github/workflows/assessment-quality.yml'
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run assessment QA regression tests
+        env:
+          PYTHONPATH: src
+        run: python -m unittest discover -s tests -p 'test_mcq_quality.py' -v
